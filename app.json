@@ -1,0 +1,12 @@
+{
+  "name": "dialedIn",
+  "displayName": "dialedIn",
+  "expo": {
+    "name": "dialedIn",
+    "slug": "dialedIn",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
