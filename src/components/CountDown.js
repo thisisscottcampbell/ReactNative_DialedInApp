@@ -22,10 +22,11 @@ export const CountDown = ({ min = 20, isPaused }) => {
 	};
 
 	useEffect(() => {
+		if (isPaused) return;
 		interval.current = setInterval(timer, 1000);
 
 		return () => clearInterval(interval.current);
-	}, []);
+	}, [isPaused]);
 
 	return (
 		<Text style={styles.text}>
