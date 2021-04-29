@@ -2,22 +2,44 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { CountDown } from '../../components/CountDown';
 import { RoundedButton } from '../../components/RoundedButton';
+import { ProgressBar } from 'react-native-paper';
 
 export const Timer = ({ subject }) => {
 	const [isStarted, setStarted] = useState(false);
+	const [progress, setProgress] = useState(1);
+
+	const onProgress = (timeLeft) => setProgress(timeLeft);
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.countDown}>
-				<CountDown isPaused={!isStarted} />
+				<CountDown isPaused={!isStarted} onProgress={onProgress} />
 			</View>
 			<View style={{ paddingTop: 40 }}>
 				<Text style={styles.title}>Focusing On:</Text>
 				<Text style={styles.task}>{subject}</Text>
 			</View>
+			<View style={{ paddingTop: 10 }}>
+				<ProgressBar
+					color="#5E84E2"
+					style={{ height: 10 }}
+					progress={progress}
+				/>
+			</View>
 			<View style={styles.buttonWrapper}>
-				<RoundedButton title=">" size={50} onPress={() => setStarted(true)} />
-				<RoundedButton title="||" size={50} onPress={() => setStarted(false)} />
+				{!isStarted ? (
+					<RoundedButton
+						title="play"
+						size={50}
+						onPress={() => setStarted(true)}
+					/>
+				) : (
+					<RoundedButton
+						title="pause"
+						size={50}
+						onPress={() => setStarted(false)}
+					/>
+				)}
 			</View>
 		</View>
 	);
