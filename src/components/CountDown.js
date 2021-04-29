@@ -4,10 +4,10 @@ import { Text, View, StyleSheet } from 'react-native';
 const minsToMills = (num) => num * 1000 * 60;
 const formatTime = (time) => (time < 10 ? `0${time}` : time);
 
-export const CountDown = ({ min = 20, isPaused, onProgress }) => {
+export const CountDown = ({ mins = 0.1, isPaused, onProgress }) => {
 	const interval = useRef(null);
 
-	const [time, setTime] = useState(minsToMills(min));
+	const [time, setTime] = useState(minsToMills(mins));
 
 	const minutes = Math.floor(time / 1000 / 60) % 60;
 	const seconds = Math.floor(time / 1000) % 60;
@@ -17,14 +17,21 @@ export const CountDown = ({ min = 20, isPaused, onProgress }) => {
 			if (time === 0) return time;
 			const timeLeft = time - 1000;
 
-			onProgress(timeLeft / minsToMills(min));
+			onProgress(timeLeft / minsToMills(mins));
 
 			return timeLeft;
 		});
 	};
 
 	useEffect(() => {
-		if (isPaused) return;
+		setTime(minsToMills(mins));
+	}, [mins]);
+
+	useEffect(() => {
+		if (isPaused) {
+			interval.current && clearInterval(interval.current);
+			return;
+		}
 		interval.current = setInterval(timer, 1000);
 
 		return () => clearInterval(interval.current);
