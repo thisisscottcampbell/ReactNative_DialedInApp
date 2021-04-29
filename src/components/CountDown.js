@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from 'react-native';
 const minsToMills = (num) => num * 1000 * 60;
 const formatTime = (time) => (time < 10 ? `0${time}` : time);
 
-export const CountDown = ({ min = 20, isPaused }) => {
+export const CountDown = ({ min = 20, isPaused, onProgress }) => {
 	const interval = useRef(null);
 
 	const [time, setTime] = useState(minsToMills(min));
@@ -16,6 +16,8 @@ export const CountDown = ({ min = 20, isPaused }) => {
 		setTime((time) => {
 			if (time === 0) return time;
 			const timeLeft = time - 1000;
+
+			onProgress(timeLeft / minsToMills(min));
 
 			return timeLeft;
 		});
