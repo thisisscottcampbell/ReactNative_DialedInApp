@@ -3,9 +3,10 @@ import { View, StyleSheet, Text } from 'react-native';
 import { CountDown } from '../../components/CountDown';
 import { RoundedButton } from '../../components/RoundedButton';
 import { ProgressBar } from 'react-native-paper';
-import { Timing } from './Timing';
+import { useKeepAwake } from 'expo-keep-awake';
 
 export const Timer = ({ subject }) => {
+	useKeepAwake();
 	const [time, setTime] = useState(5);
 	const [isStarted, setStarted] = useState(false);
 	const [progress, setProgress] = useState(1);
